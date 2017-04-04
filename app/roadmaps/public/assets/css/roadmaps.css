@@ -1,0 +1,18 @@
+/* Extended*/
+.nav-tabs > li > a, .nav-pills > li > a {font-size: 12px;}
+
+/*Page*/
+.road-map-container{min-height:410px}
+.road-map-container .road-map-left{height:600px; overflow-y: auto;}
+.road-map-container .road-map-left .province-item{cursor:pointer;}
+.road-map-container .road-map-right{height:600px;}
+.road-map-container .road-map-right .roadmap-map{width:100%;height:100%}
+#roadmap{width:100%;height:100%}
+
+.location-list{padding-left:12px;list-style: none;}
+.location-list .tree-branch{color:#1e65a2}
+.location-list .toggle-ctrl{cursor:pointer;font-size:11px;}
+.location-list .toggle-list{}
+.location-list .road-location-list{}
+.location-list .road-information-list{}
+.regionprovince-list{font-size:12px;padding-left: 0px;}

@@ -1,0 +1,103 @@
+<div class="road-map-container" ng-init="init()">
+    <div class="col-lg-3 road-map-left">
+        <tabset>
+            <tab heading="Location">
+                <ul class="regionprovince-list location-list">
+                    <li ng-repeat="region in regionprovince">
+                        <a class="toggle-list">
+                            <i  ng-click="ontoggle_loc('region_',region,$event)" class="fa fa-plus-square toggle-ctrl" aria-hidden="true"></i>
+                            <font >{{ region.Name }}</font>
+                        </a>
+                        <ul class="location-list" id="region_{{region.Code}}" style="display:none;">                            
+                            <li ng-repeat="province in region.provinces">
+                                <font class="tree-branch">|--</font> 
+                                <a class="toggle-list">
+                                    <i ng-click="ontoggle_loc('prov_',province,$event)"   class="fa fa-plus-square toggle-ctrl" aria-hidden="true"></i>
+                                    {{ province.Name }} 
+                                </a>
+                                <ul class="location-list" id="prov_{{province.Code}}" style="display:none;">
+                                    <!-------------------------------------------------------------------------------------->
+                                    <li> <!--  Road Information Details Province-->
+                                        <font class="tree-branch">|--</font>
+                                        <a class="toggle-list">                                    
+                                            <i ng-click="ontoggle_loc('road_info_prov',province,$event)"   class="fa fa-plus-square toggle-ctrl" aria-hidden="true"></i>
+                                            <i class="fa fa-road road-information-list" aria-hidden="true"></i> -- Provincial Road(s)({{province.roadcount || 0}})                                                                         
+                                        </a>
+                                        <ul class="location-list"id="road_info_prov{{province.Code}}">                                            
+                                            <li ng-repeat="road in province.roads">
+                                                <font class="tree-branch">|--</font>
+                                                <a class="toggle-list">
+                                                    <i  ng-click="ontoggle_loc('road_attr',road,$event)" class="fa fa-plus-square toggle-ctrl" aria-hidden="true"></i>
+                                                     <font ng-click="onclickattr(road,road.R_NAME)">{{ road.R_NAME }}</font>
+                                                </a>            
+                                                <ul class="location-list" id="road_attr{{road.R_ID}}">                                            
+                                                            <li ng-repeat="attr in road.attr.attrs" ng-include="'roadsattribute'"></li>
+                                                 </ul>
+                                            </li>
+                                        </ul>                                   
+                                    </li>
+                                    <!-------------------------------------------------------------------------------------->
+                                    <li><!-- Muncipalities list-->
+                                        <font class="tree-branch">|--</font>
+                                        <a class="toggle-list">                                    
+                                            <i ng-click="ontoggle_loc('prov_mun_',province,$event)"   class="fa fa-plus-square toggle-ctrl" aria-hidden="true"></i>
+                                            <i class="fa fa-map-marker road-location-list" aria-hidden="true"></i> -- City/Municipality Roads({{ province.municipalities.length }})                                                                         
+                                        </a>
+                                        <ul class="location-list" id="prov_mun_{{province.Code}}" style="display:none;">
+                                            <li ng-repeat="municipality in province.municipalities">                                            
+                                                <font class="tree-branch">|--</font> 
+                                                <a class="toggle-list">
+                                                    <i  ng-click="ontoggle_loc('road_info_mun',municipality,$event)" class="fa fa-plus-square toggle-ctrl" aria-hidden="true"></i>
+                                                    {{ municipality.Name }} 
+                                                </a>
+                                                <ul id="road_info_mun{{municipality.Code}}" class="location-list">                                            
+                                                    <li ng-repeat="road in municipality.roads">
+                                                        <font class="tree-branch">|--</font>
+                                                        <a class="toggle-list">
+                                                            <i  ng-click="ontoggle_loc('road_attr',road,$event)" class="fa fa-plus-square toggle-ctrl" aria-hidden="true"></i>
+                                                            <font ng-click="onclickattr(road,road.R_NAME)">{{ road.R_NAME }}</font> 
+                                                        </a>
+                                                        <ul class="location-list"id="road_attr{{road.R_ID}}">                                            
+                                                            <li ng-repeat="attr in road.attr.attrs" ng-include="'roadsattribute'"></li>
+                                                        </ul>            
+                                                    </li>
+                                                </ul>       
+                                            </li>   
+                                        </ul>
+                                    </li><!-- end Muncipalities list-->   
+                                    <!-------------------------------------------------------------------------------------->
+                                 </ul>                                   
+                            </li>
+                        </ul>    
+                    </li>
+                </ul>
+                <!------ Roads Attributes-->
+                <script type="text/ng-template" id="roadsattribute">
+                        <font ng-if="attribsinarr.indexOf(attr.name)==-1" class="tree-branch">|------</font>
+                        <font ng-if="attribsinarr.indexOf(attr.name)>-1" class="tree-branch">|--</font>
+                        <a  class="toggle-list" ng-if="attribsinarr.indexOf(attr.name)>-1">
+                            <i  ng-click="ontoggle_loc('road_attr_details',attr,$event)" class="fa fa-plus-square toggle-ctrl" aria-hidden="true"></i>
+                            <font ng-click="onclickattr(attr.value,attr.name)">{{ attr.name }}({{attr.count}}) </font>
+                        </a>
+                        <a ng-if="attribsinarr.indexOf(attr.name)==-1" ng-click="onclickattr(attr.value,attr.name)">{{ attr.name }}</a>
+                        <ul class="location-list" id="road_attr_details{{attr._id}}" ng-if="attribsinarr.indexOf(attr.name)>-1" style="display:none;">                                            
+                            <li ng-repeat="attr_detail in attr.value">
+                                <font class="tree-branch">|--</font>
+                                <a ng-click="onclickattr(attr_detail,attr.name)">{{getattribdisplay(attr_detail,attr.name)}}</a>
+                            </li>
+                        </ul>
+                </script>
+            </tab>
+            <tab heading="Advance Search">
+            </tab>
+        </tabset>                    
+    </div>    
+    <!-- Division-->
+    <div class="col-lg-9 road-map-right">
+        <div class="row roadmap-details">        
+        </div> 
+        <div class="row roadmap-map">
+            <div id="roadmap"> </div>                
+        </div>    
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" ng-app = "RBIS">
+<head>
+        {% include 'templates/head.html' %}
+</head>
+<body class="page-header-fixed page-quick-sidebar-over-content page-sidebar-closed-hide-logo page-container-bg-solid">    
+    <!-- Top -->    
+    <div class="page-header navbar navbar-fixed-top">
+        {% include 'templates/topnavigation.html' %}
+    </div>
+    <div class="clearfix"></div>
+    <div class="page-container">
+        <!-- Navigation Right -->
+        {% include 'templates/navigation.html' %}
+         <!-- Content Page -->
+        {% include 'templates/pagecontent.html' %}                  
+    </div>
+    <!-- footer -->
+    {% include 'templates/footer.html' %}
+    {% include 'templates/runscript.html' %}
+</body>
+</html>
