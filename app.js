@@ -17,12 +17,14 @@ const fs=require("fs");
 const walk    = require('walk');
 const flash = require('express-flash');
 
+const cluster = require('cluster')
+const numCPUs = require('os').cpus().length
+
 const MemoryStore = session.MemoryStore;
 const store = new MemoryStore();
 
 
 dotenv.load({ path: '.env' });
-
 const app = express();
 
 mongoose.Promise = global.Promise;
@@ -145,9 +147,31 @@ walk.walkSync(process.env.MODULE_PATH, options);
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
 app.use('/bower_components', express.static(__dirname + '/bower_components'));
 /**/
-app.listen(app.get('port'), ()=> {
-  console.log('Express server listening on port %d in %s mode', app.get('port'), app.get('env'));
-});
+
+
+if (cluster.isMaster){
+    console.log('I am the master, launching workers!')
+    for(var i=0;i<numCPUs;i++){
+        cluster.fork()
+    }
+
+    cluster.on('exit', (worker, code, signal) => {
+        console.log(`worker ${worker.process.pid} died`);
+    });
+
+    cluster.fork().on('disconnect', () => {
+        console.log(`worker ${worker.process.pid} disconnect`);
+    });
+ }else{
+     console.log('I am a worker!')
+     console.log(`Worker ${process.pid} started`);      
+    app.listen(app.get('port'), ()=> {
+        console.log('Express server listening on port %d in %s mode', app.get('port'), app.get('env'));
+    });
+ }
+  
+console.log ('After the fork');
+ 
 
 
  
