@@ -3034,10 +3034,11 @@ Customized Bootstrap Modal
 Notes
 ***/
 .note {
-  margin: 0 10px 20px 0;
-  padding: 10px 30px 15px 15px;
+  /*margin: 0 10px 20px 0;*/
+  /*padding: 10px 30px 15px 15px;*/
+  padding:0px 30px 1px 15px;
   border-left: 5px solid #eee;
-  width: 32.65% !important;
+  /*width: 32.65% !important;*/
   line-height: 2;
 }
 .note h1,

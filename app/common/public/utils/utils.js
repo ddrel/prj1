@@ -192,6 +192,11 @@ angular.module('RBIS').factory('utilities', ['$window','$rootScope',function ($w
         }
 
 
+    utilities.text = {};
+    utilities.text.truncate =  function(txt,len){
+        return txt.length>=len?txt.substring(0,len) + " ...":txt;
+    }
+
       utilities.geo = {}
       utilities.geo.tocoord = function(latng,angle,radius){
           var coord = {};
@@ -224,6 +229,82 @@ angular.module('RBIS').factory('utilities', ['$window','$rootScope',function ($w
     
 
     utilities.roads={}
+    utilities.roads.roadattrkeys = ["RoadBridges",
+                                    "RoadCarriageway",
+                                    "RoadCauseways",
+                                    "RoadCulverts",
+                                    "RoadDitches",
+                                    "RoadGuardrails",
+                                    "RoadHazards",
+                                    "RoadJunctions",
+                                    "RoadLightings",
+                                    "RoadLocRefPoints",
+                                    "RoadMarkings",
+                                    "RoadMedian",
+                                    "RoadPlaceNames",
+                                    "RoadShoulders",
+                                    "RoadSideFriction",
+                                    "RoadSideSlopes",
+                                    "RoadSideWalks",
+                                    "RoadSigns",
+                                    "RoadSpillways",
+                                    "RoadStructures"];
+
+/*
+Road Side Features:
+Shoulders
+Structures
+SideSlopes
+SideWalks
+
+Safety Features Appliance:
+Guardrails
+Markings
+Lightings
+Hazards
+Signs
+
+Drainage:
+Causeways
+Culverts
+Ditches
+Spillways
+
+Other Features:
+SideFriction
+Junctions
+Median
+PlaceNames
+*/
+
+    utilities.roads.groups={"RSF":{key:"RSF","label":"Side Features",groupkeys:["RoadShoulders","RoadSideSlopes","RoadStructures","RoadSideWalks"]}, 
+                            "SFA":{key:"SFA","label":"Safety Features",groupkeys:["RoadGuardrails","RoadHazards","RoadLightings","RoadMarkings","RoadSigns"]},
+                            "D":{key:"D","label":"Drainage",groupkeys:["RoadCauseways","RoadCulverts","RoadDitches","RoadSpillways"]},
+                            "OF":{key:"OF","label":"Other Features",groupkeys:["RoadSideFriction","RoadPlaceNames","RoadJunctions","RoadMedian"]}
+                            };
+
+    utilities.roads.attrlabel = {"RoadBridges":{label:"Bridges",group:""},
+                                "RoadCarriageway":{label:"Carriageway",group:""},
+                                "RoadCauseways":{label:"Causeways",group:utilities.roads.groups.D.key},
+                                "RoadCulverts":{label:"Culverts",group:utilities.roads.groups.D.key},
+                                "RoadDitches":{label:"Ditches",group:utilities.roads.groups.D.key},
+                                "RoadGuardrails":{label:"Guardrails",group:utilities.roads.groups.SFA.key},
+                                "RoadHazards":{label:"Hazards",group:utilities.roads.groups.SFA.key},
+                                "RoadJunctions":{label:"Junctions",group:utilities.roads.groups.OF.key},
+                                "RoadLightings":{label:"Lightings",group:utilities.roads.groups.SFA.key},
+                                "RoadLocRefPoints":{label:"KM Post",group:""},
+                                "RoadMarkings":{label:"Markings",group:utilities.roads.groups.SFA.key},
+                                "RoadMedian":{label:"Median",group:utilities.roads.groups.OF.key},
+                                "RoadPlaceNames":{label:"Place Names",group:utilities.roads.groups.OF.key},
+                                "RoadShoulders":{label:"Shoulders",group:utilities.roads.groups.RSF.key},
+                                "RoadSideFriction":{label:"Side Friction",group:utilities.roads.groups.OF.key},
+                                "RoadSideSlopes":{label:"Side Slopes",group:utilities.roads.groups.RSF.key},
+                                "RoadSideWalks":{label:"Sidewalks",group:utilities.roads.groups.RSF.key},
+                                "RoadSigns":{label:"Signs",group:utilities.roads.groups.SFA.key},
+                                "RoadSpillways":{label:"Spillways",group:utilities.roads.groups.D.key},
+                                "RoadStructures":{label:"Structures"},group:utilities.roads.groups.RSF.key};
+                                
+
     utilities.roads.pavement={"AMGB" :{code:"AMGB", text:"Asphalt Mix on Granular Base",color:""},
                               "AMAB" :{code:"AMAB", text:" Asphalt Mix on Asphalt Base",color:""},
                               "AMAP" :{code:"AMAP", text:" Asphalt Mix on Asphalt Pavement",color:""},
@@ -269,7 +350,8 @@ angular.module('RBIS').factory('utilities', ['$window','$rootScope',function ($w
        if(name=="Bridges" || name=="PlaceNames"){
             _value = attr.Name;
        }else if(name=="Carriageway"){
-           _value = attr.NumLanes +"/" + attr.SurfaceTyp +"/" + attr.PavementTy + "/" +  attr.SegmentID;
+           console.log(attr.SegmentID + "aaaaa")
+           _value =  attr.SegmentID; // attr.NumLanes +"/" + attr.SurfaceTyp +"/" + attr.PavementTy + "/" +
        }else if(name=="Shoulders" || name=="Ditches" ||  name=="Guardrails" ||  name=="Structures" || name=="SideWalks"){
                 _value = attr.Position + "/" + attr.TypeID + " (" +  attr.LRPStartDi + " - " + attr.LRPEndDisp  +")";
        }else if(name=="LocRefPoints"){

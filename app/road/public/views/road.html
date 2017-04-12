@@ -1,1 +1,86 @@
-road
+<div class="row roads-main" ng-init="init()">
+<div class="page-bar page-bar-color2">
+				<ul class="page-breadcrumb">
+					<li>
+						<i class="fa fa-home"></i>
+						<a href="/#/dashboard">Home</a>
+						<i class="fa fa-angle-right"></i>
+					</li>
+					<li>
+						<a href="/#/road/list">Roads</a>					
+					</li>					
+				</ul>
+			</div>
+<div>
+<div class="page-bar" style="margin-bottom:4px;">
+    <div class="col-sm-4" style="margin-top:10px">
+        <a style="cursor:pointer;" ng-model="advancefilterdisplay" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
+            <font ng-if="advancefilterdisplay==0">Advance Search</font>
+            <font ng-if="advancefilterdisplay==1">Hide Advance Search</font>    
+        </a>
+
+    </div>
+    <div class="col-sm-8 no-padding">
+        <div class="input-group" ng-show="advancefilterdisplay==0">
+            <input ng-change="onSearch(searchText)" ng-model="searchText" type="text" class="form-control txt-white" placeholder="Search for road name or road id" /> <span class="input-group-btn"> 
+            <button class="btn btn-primary2" type="button">Search
+            </button> </span>
+        </div>
+    </div>       
+</div>
+<div>
+    <table class="table table-bordered-2 table-roadmain">            
+        <thead>
+            <tr class="table-head">
+                <td  width="110px">Road ID</td>
+                <td>Road Name</td>
+                <td width="100px">Classification</td>
+                <td width="138px">Total Length (km)</td>
+                <td width="122px">No. of Segments</td>
+                <td width="110px">No. of Bridges</td>
+                <td >Last Modified</td>
+                <td width="157px" align="center">Action</td>
+            </tr>
+            <tr ng-show="advancefilterdisplay">
+                <td width="110px" style="padding:0px;"><input type="text" class="form-control form-control-search-table txt-white"></input></td>
+                <td style="padding:0px;"><input type="text" class="form-control form-control-search-table txt-white"></input></td>
+                <td width="100px" style="padding:0px;">                    
+                    <select class="form-control m-b form-control-search-table txt-white">
+                        <option value="All">All</option>
+                        <option value="Province">Province</option>
+                        <option value="City">City</option>
+                    </select>
+                </td>
+                <td width="138px" style="padding:0px;"><input type="text" class="form-control form-control-search-table txt-white"></input></td>
+                <td width="122px" style="padding:0px;"><input type="text" class="form-control form-control-search-table txt-white"></input></td>
+                <td width="110px" style="padding:0px;"><input type="text" class="form-control form-control-search-table txt-white"></td>
+                <td colspan="2" style="padding:0px;"></td>                        
+            </tr>                     
+        </thead>
+       <tbody>           
+                <tr ng-repeat="road in roadsCollection">
+                    <td>{{ road._id.R_ID}}</td>
+                    <td title="{{ road._id.R_NAME }}">{{ truncatetext(road._id.R_NAME) }}</td>
+                    <td>{{ road._id.R_CLASS }}</td>
+                    <td align="right">{{ road.roadlengths.toFixed(3) }}</td>
+                    <td align="right">{{ road._id.segmentcount}}</td>
+                    <td align="right">{{ road._id.bridgecount}}</td>
+                    <td></td>
+                    <td align="right" style="padding:2px;">
+                        <a href="" class="btn btn-primary2 " ng-click="update(road)">Update</a>
+                        <a href="" class="btn btn-primary2">Print</a>
+                    </td>
+                </tr>    
+       </tbody>
+       <tfoot>
+           <tr>
+               <td align="left" colspan="8">
+                   <!-- previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" -->
+                   <pagination  ng-show="roadsCollection.length>0" ng-change="pageChanged(pagination.CurrentPage)" rotate="false" boundary-link-numbers="false" total-items="(pagination.max * 10)" ng-model="pagination.CurrentPage" max-size="10" class="pagination-sm" boundary-links="true">
+                    </pagination>
+               </td>    
+           </tr>    
+       </tfoot>             
+    </table>    
+</div>    
+</div>    

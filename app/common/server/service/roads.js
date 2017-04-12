@@ -12,8 +12,21 @@ app.get("/api/roads/getcitymunroadshortinfo",(req,res)=>{
 });
 
 
-app.get("/api/roads/getroadattrtinfo",(req,res)=>{
-    roads.getroadattrtinfo(req,res);
+app.get("/api/roads/getroadattrinfo",(req,res)=>{
+    roads.getroadattrinfo(req,res);
+});
+
+app.get("/api/roads/getroadshortattrinfo",(req,res)=>{
+    roads.getroadshortattrinfo(req,res);
+});
+
+app.get("/api/roads/getroadattr",(req,res)=>{
+    roads.getroadattr(req,res);
+});
+
+
+app.get("/api/roads/getroadaggmain",(req,res)=>{
+    roads.getroadaggmain(req,res);
 });
 
 }

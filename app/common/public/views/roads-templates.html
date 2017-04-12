@@ -1,0 +1,7 @@
+<script type="text/ng-template" id="roadsattribute">
+<ul class="roads-tree-attr-child">
+    <li ng-repeat="attrdata in road[key]">
+        <font class="tree-branch">|-- {{ $index + 1}}. &nbsp;</font><a ng-click="loadattrdata(attrdata)" ></a>
+    </li>   
+</ul>
+</script>

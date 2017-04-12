@@ -1,4 +1,16 @@
-<div class="road-map-container" ng-init="init()">
+<div class="row road-map-container" ng-init="init()">
+<div class="page-bar page-bar-color2">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="/#/dashboard">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="/#/roadmaps">Road Maps</a>
+        </li>        
+    </ul>
+</div>   
     <div class="col-lg-3 road-map-left">
         <tabset>
             <tab heading="Location">
@@ -94,9 +106,9 @@
     </div>    
     <!-- Division-->
     <div class="col-lg-9 road-map-right">
-        <div class="row roadmap-details">        
+        <div class="roadmap-details">        
         </div> 
-        <div class="row roadmap-map">
+        <div class="roadmap-map">
             <div id="roadmap"> </div>                
         </div>    
     </div>

@@ -148,9 +148,9 @@ app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }))
 app.use('/bower_components', express.static(__dirname + '/bower_components'));
 /**/
 
-
+/*
 if (cluster.isMaster){
-    console.log('I am the master, launching workers!')
+    console.log('master Cluster .....')
     for(var i=0;i<numCPUs;i++){
         cluster.fork()
     }
@@ -162,17 +162,18 @@ if (cluster.isMaster){
     cluster.fork().on('disconnect', () => {
         console.log(`worker ${worker.process.pid} disconnect`);
     });
- }else{
-     console.log('I am a worker!')
+ }else{     
      console.log(`Worker ${process.pid} started`);      
     app.listen(app.get('port'), ()=> {
         console.log('Express server listening on port %d in %s mode', app.get('port'), app.get('env'));
     });
- }
-  
-console.log ('After the fork');
+ }  
  
-
+*/
+      
+app.listen(app.get('port'), ()=> {
+    console.log('Express server listening on port %d in %s mode', app.get('port'), app.get('env'));
+});
 
  
 module.exports = app;

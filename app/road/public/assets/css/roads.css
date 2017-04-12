@@ -1,0 +1,38 @@
+.table-roadmain{ background-color: White;
+    border-collapse: collapse;
+    border-color: #cccccc;
+    border-style: none;
+    border-width: 1px;
+    font-size: 10pt;
+    width: 100%;
+    border: 1px solid #EBEBEB;}
+.table-roadmain .table-head{color:White;background-color:#428BCA;font-weight:bold;}
+.table-roadmain tbody td:first-child {color:#428bca;}
+.table-roadmain tbody tr:nth-child(even) {background-color:#F5F5F0;}
+.table-roadmain tbody tr:nth-child(odd) {background: #FFF}
+.table-roadmain tbody td.no-wrap{display: inline-block; /* <- Prevent <tr> in a display css */
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    /* end */
+    width: 200px; /* Space size limit */
+    overflow: hidden;
+}    
+
+.table > caption + thead > tr:nth-child(2) > th, .table > colgroup + thead > tr:nth-child(2) > th, .table > thead:nth-child(2) > tr:nth-child(2) > th, .table > caption + thead > tr:nth-child(2) > td, .table > colgroup + thead > tr:nth-child(2) > td, .table > thead:first-child > tr:nth-child(2) > td {
+    border-top: 0 none !important;
+}
+.table-roadmain tfoot tr td ul.pagination,
+.table-roadmain tfoot tr td ul.pagination pagination-sm {margin:0px !important;}
+.page-container-bg-solid .page-bar {margin-left:0px;padding-right:0px;}
+
+
+
+/* updat page*/
+.features-title {font-weight: 500;margin: 0px;padding: 0;}
+.segment-id {color: #4d9ac5;}
+.note-font{font-size: 11px;}
+
+.roads-tree-attr-main{list-style:none;padding-left:2px;padding-top}
+.roads-tree-attr-child{list-style:none;padding-left:24px}
+
+

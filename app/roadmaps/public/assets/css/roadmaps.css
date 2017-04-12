@@ -3,9 +3,9 @@
 
 /*Page*/
 .road-map-container{min-height:410px}
-.road-map-container .road-map-left{height:600px; overflow-y: auto;}
+.road-map-container .road-map-left{height:600px; overflow-y: auto;padding-left:0px;}
 .road-map-container .road-map-left .province-item{cursor:pointer;}
-.road-map-container .road-map-right{height:600px;}
+.road-map-container .road-map-right{height:600px;padding-right:0px;}
 .road-map-container .road-map-right .roadmap-map{width:100%;height:100%}
 #roadmap{width:100%;height:100%}
 
@@ -15,4 +15,4 @@
 .location-list .toggle-list{}
 .location-list .road-location-list{}
 .location-list .road-information-list{}
-.regionprovince-list{font-size:12px;padding-left: 0px;}
+.regionprovince-list{font-size:12px;padding-left: 8px;}

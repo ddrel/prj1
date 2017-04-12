@@ -10,18 +10,61 @@
                 $urlRouterProvider.otherwise('dashboard');
                 $stateProvider
                             .state('home', {
+                                 abstract:true,
                                   url: '/',
                                   templateUrl: '/home/views/index.html'
                               })
-                              .state('home.dashboard', {
+                              .state('home.dashboard', {                                  
                                   url: 'dashboard',
                                   templateUrl: '/home/views/main.html',
                                   data : { pageTitle: 'Dashboard | Road and Bridge Information System' } 
                               })
-                              .state('home.road', {
-                                  url: 'road',
+                              .state('road', {
+                                 abstract:true,
+                                  url: '/road',
+                                  templateUrl: '/road/views/index.html'
+                              })
+                              .state('road.list', {
+                                  url: '/list',
                                   templateUrl: '/road/views/road.html',
-                                  data : { pageTitle: 'Roads | Road and Bridge Information System' }                                  
+                                  controller:"roadsCtrl",
+                                  data : { pageTitle: 'Roads | Road and Bridge Information System' },
+                                  resolve:{                                            
+                                            loadfile: function ($ocLazyLoad) {
+                                                return $ocLazyLoad.load([
+                                                    {
+                                                        cache:true,
+                                                        files: ['/road/assets/css/roads.css',
+                                                                '/road/controllers/roads.js'                                                                
+                                                                ]
+                                                    }                                                    
+                                                ]);
+                                            }                                      
+                                  }  
+                              })
+                              .state('road.update', {
+                                  url: '/update/:id',
+                                  templateUrl: '/road/views/roadupdate.html',
+                                  controller:"roadsupdateCtrl",
+                                  data : { pageTitle: 'Roads | Updates Roads' },
+                                  resolve:{                                            
+                                            loadfile: function ($ocLazyLoad) {
+                                                return $ocLazyLoad.load([
+                                                    {
+                                                        serie: true,
+                                                        cache:true,
+                                                        files: ['/bower_components/leaflet/dist/leaflet.js',
+                                                                '/bower_components/leaflet/dist/leaflet.css',
+                                                                '/bower_components/leaflet-draw/dist/leaflet.draw.js',
+                                                                '/bower_components/leaflet-draw/dist/leaflet.draw.css',
+                                                                '/common/js/leaflet.maps.jquery.js',
+                                                                '/road/assets/css/roads.css',
+                                                                '/road/controllers/roadsupdate.js'                                                                
+                                                                ]
+                                                    }                                                    
+                                                ]);
+                                            }                                      
+                                  }  
                               })
                               .state('home.roadmaintenance', {
                                   url: 'roadmaintenance',

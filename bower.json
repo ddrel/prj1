@@ -31,12 +31,13 @@
     "angular-ui-date": "~1.0.0",
     "d3-scale": "~0.6.4",
     "angular-ui-switch": "~0.1.1",
-    "moment": "~2.13.0",
+    "moment": "^2.18.1",
     "font-awesome": "fontawesome#^4.6.3",
     "openlayers": "^3.20.1",
     "oclazyload": "^1.1.0",
     "leaflet-draw": "leaflet.draw#0.2.4",
-    "angular-sanitize": "^1.6.3"
+    "angular-sanitize": "^1.6.3",
+    "angular-datepicker": "^2.0.3"
   },
   "resolutions": {
     "angular-ticker": "1.0.0",

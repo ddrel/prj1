@@ -1,0 +1,194 @@
+<div class="row" ng-init="init()">        
+<div class="page-bar page-bar-color2">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="/#/dashboard">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="/#/road/list">Roads</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="/#/road/update/{{road.R_ID}}">Road Features</a>
+        </li>
+    </ul>
+</div>        
+<div class="panel panel-default">
+<div class="panel-heading">
+    <div class="row">
+    <div class="col-md-9">
+        <h3 class="features-title"><span class="segment-id">{{road.R_ID}}:</span> {{road.R_NAME}}</h3>    
+    </div>
+    <div class="col-md-3">
+        <a class="pull-right" style="cursor:pointer;" ng-model="roadsummarydisplay" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
+            <font >Hide/Show Road Summary</font>        
+        </a>
+    </div>
+   </div>         
+</div>
+<div class="panel-body">       
+    <div ng-show="roadsummarydisplay">
+        <div class="note note-green-dark note-font col-md-4">
+            <table>
+               <tr><td>Road Classification</td><td></td></tr>
+               <tr><td>Length (km)</td><td></td></tr>
+               <tr><td>Road Importance</td><td></td></tr>
+               <tr><td>Average Daily Traffic</td><td></td></tr>
+               <tr><td>Cost of Construction</td><td></td></tr> 
+            </table>    
+        </div>
+        <div class="note note-success note-font col-md-4">
+             <table>
+               <tr><td><b>Suface Type:</b></td></tr>
+               <tr><td>Asphalt</td><td></td></tr>
+               <tr><td>Gravel</td><td></td></tr>
+               <tr><td>Earth</td><td></td></tr>
+               <tr><td>Concrete</td><td></td></tr> 
+            </table>
+        </div>
+        <div class="note note-info note-font col-md-4">
+             <table>
+               <tr><td colspan="2"><b>Surface Condition:</b></td></tr>
+               <tr><td>New </td><td></td>
+                    <td>Bad </td><td></td>
+               </tr>
+               <tr><td colspan="2">Good</td><td></td></tr>
+               <tr><td colspan="2">Fair</td><td></td></tr>
+               <tr><td colspan="2" >Poor</td><td></td></tr>               
+            </table>
+        </div>
+    </div>
+    <div>
+        <div class="col-md-3" style="margin:0px;padding:0px">
+        <tabset>
+            <tab heading="Road Main Info">
+                <ul class="roads-tree-attr-main">
+                    <li><a ng-click="loaddatabyfield('road')"><i aria-hidden="true" class="fa fa-road road-information-list"></i>&nbsp;Road({{ road.R_NAME }})</a></li>
+                    <ul class="roads-tree-attr-child">
+                        <li><i class="fa fa-sitemap" aria-hidden="true"></i>
+                            <a ng-click="getattrdata('RoadBridges')" ><font class="tree-branch">|--</font>{{ roadsAttr.RoadBridges.label }} ({{ road["RoadBridges_length"] }})</a>
+                               <ul ng-repeat = "key in ['RoadBridges']" class="roads-tree-attr-child" ng-include="'roadsattribute'"></ul>
+                        </li>
+                        <li><i class="fa fa-info" aria-hidden="true"></i>
+                            <a ng-click="getattrdata('RoadCarriageway')" ><font class="tree-branch">|--</font>{{ roadsAttr.RoadCarriageway.label }} ({{ road["RoadCarriageway_length"] }})</a></li>
+                            <ul ng-repeat = "key in ['RoadCarriageway']" class="roads-tree-attr-child" ng-include="'roadsattribute'"></ul>
+                        <li><i class="fa fa-map-marker" aria-hidden="true"></i>
+                            <a ng-click="getattrdata('RoadLocRefPoints')" ><font class="tree-branch">|--</font>{{ roadsAttr.RoadLocRefPoints.label }} ({{ road["RoadLocRefPoints_length"] }})</a></li>                        
+                            <ul ng-repeat = "key in ['RoadLocRefPoints']" class="roads-tree-attr-child" ng-include="'roadsattribute'"></ul>
+                    </ul>                       
+                </ul>
+            </tab>
+            <tab heading="Features">
+                <ul class="roads-tree-attr-main">                     
+                     <!-- Drainage -->
+                     <li><a>{{ roadattrgroup.D.label}}</a>
+                            <ul class="roads-tree-attr-child">
+                                <li ng-repeat="key in roadattrgroup.D.groupkeys">
+                                   <a ng-click="getattrdata(key)" ><font class="tree-branch">|--</font>{{ roadsAttr[key].label }} ({{ road[key + "_length"] }})</a>
+                                    <ul ng-repeat = "key in [key]" class="roads-tree-attr-child" ng-include="'roadsattribute'"></ul>
+                                </li>
+                            </ul>    
+                     </li>                     
+                     <!-- Road Side Features-->
+                     <li><a>{{ roadattrgroup.RSF.label}}</a>
+                            <ul class="roads-tree-attr-child">
+                                <li ng-repeat="key in roadattrgroup.RSF.groupkeys">
+                                        <a ng-click="getattrdata(key)" ><font class="tree-branch">|--</font>{{  roadsAttr[key].label }} ({{ road[key + "_length"] }})</a>
+                                         <ul ng-repeat = "key in [key]" class="roads-tree-attr-child" ng-include="'roadsattribute'"></ul>   
+                                </li>
+                            </ul>    
+                     </li>
+                     <!-- Safety Features Appliance-->
+                     <li><a>{{ roadattrgroup.SFA.label}}</a>
+                            <ul class="roads-tree-attr-child">
+                                <li ng-repeat="key in roadattrgroup.SFA.groupkeys">
+                                    <a ng-click="getattrdata(key)" ><font class="tree-branch">|--</font>{{  roadsAttr[key].label }} ({{ road[key + "_length"] }})</a>
+                                    <ul ng-repeat = "key in [key]" class="roads-tree-attr-child" ng-include="'roadsattribute'"></ul>
+                                </li>
+                            </ul>    
+                     </li>                    
+                     <!-- Other Features-->
+                     <li><a>{{ roadattrgroup.OF.label}}</a>
+                            <ul class="roads-tree-attr-child">
+                                <li ng-repeat="key in roadattrgroup.OF.groupkeys">
+                                    <a ng-click="getattrdata(key)" ><font class="tree-branch">|--</font>{{ roadsAttr[key].label  }} ({{ road[key + "_length"] }})</a>
+                                    <ul ng-repeat = "key in [key]" class="roads-tree-attr-child" ng-include="'roadsattribute'"></ul>
+                                </li>
+                            </ul> 
+                     </li>
+
+                     <!--
+                     <li ng-repeat="key in roadsAttrKeys">
+                         <a ng-click="getattrdata(key)" ><font class="tree-branch">|--</font>{{ roadsAttr[key].label }} ({{ road[key + "_length"] }})</a> - {{ roadsAttr[key].group }}
+                         <ul class="roads-tree-attr-child">
+                             <li ng-repeat="attrdata in road[key]">
+                                    <font class="tree-branch">|-- {{ $index + 1}}. &nbsp;</font><a ng-click="loadattrdata(attrdata)" ></a>
+                             </li>   
+                         </ul>
+                     </li>
+                     -->
+                </ul>    
+            </tab>    
+         </tabset>    
+
+           <script type="text/ng-template" id="roadsattribute">
+                <li ng-repeat="attrdata in road[key]">
+                    <font class="tree-branch">{{ getattribdisplay(attrdata,key) }}</font><a ng-click="loadattrdata(attrdata)" ></a>
+                </li>
+           </script>                   
+        </div>
+        <div class="col-md-9 no-padding">
+            <div class="page-bar page-bar-color2">
+            <ul class="page-breadcrumb">
+                <li>
+                    <i aria-hidden="true" class="fa fa-road road-information-list"></i>
+                    <a>{{road.R_NAME}}</a>
+                    <i class="fa fa-angle-right"></i>
+                </li>                
+            </ul>
+        </div>
+        <div><!--- Content fields -->
+            <div class="col-md-9 no-padding">        
+                <table>
+                        <tr ng-if="currentloadata[field].visible" ng-repeat = "field in currentloadatafields">
+                            <td >{{ currentloadata[field].label }} : </td>
+                            <td>
+                                <label ng-if="currentloadata[field].ctrl=='label'">{{ road[field] }}</label>
+                                <input type="text" ng-if="currentloadata[field].ctrl=='text'"  ng-model="road[field]" class="{{currentloadata[field].class}}"></input>
+                                <select ng-if="currentloadata[field].ctrl=='select'" ng-model="road[field]" class="{{currentloadata[field].class}}">
+                                    <option value="{{opt.key}}"  ng-selected="road[field]==opt.key" ng-repeat="opt in currentloadata[field].options">{{ opt.label }}</option>
+                                </select>    
+
+                                 
+                                <textarea  ng-if="currentloadata[field].ctrl=='textarea'" 
+                                         ng-model="road[field]" 
+                                        class="{{currentloadata[field].class}}" 
+                                        style="currentloadata[field].style"></textarea>
+                            </td>    
+                        </tr>
+                </table> 
+           </div>
+           <div class="col-md-3 no-padding">
+               <div class="col-md-12">
+                    <p class="input-group">
+                    <input type="text" class="form-control" datepicker-popup ng-model="dt" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                    </p>
+             </div>
+
+           </div>        
+         </div>   
+
+        </div>      
+    </div>                    
+</div>
+</div>    
+
+</div>
+
+
+

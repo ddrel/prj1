@@ -70,7 +70,7 @@ angular.module('RBIS').controller("roadmapsCtrl", function( $scope, $http,$rootS
 
     $scope.getroadattrs =  function(a){
         if(!a.attr){
-                    $http.get("/api/roads/getroadattrtinfo?rid=" + a.R_ID).success(function(data){
+                    $http.get("/api/roads/getroadattrinfo?rid=" + a.R_ID).success(function(data){
                         a.attr = {}
                         a.geometry = data.geometry;
                         a.attr = utilities.road.toattr(data);                        
@@ -104,9 +104,7 @@ angular.module('RBIS').controller("roadmapsCtrl", function( $scope, $http,$rootS
     /** Events */
     $scope.onclickattr =  function(o,name){
         $("#roadmap").leafletMaps("clear");
-        var data =  o.geometry;
-
-        console.log(o);
+        var data =  o.geometry;        
         if(o instanceof Array){
             o.forEach(function(g){
                 var _style = _getshapestyle(g,name);
