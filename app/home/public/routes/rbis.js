@@ -1,6 +1,6 @@
 'use strict';
 (function(){
-    var RBIS = angular.module('RBIS', ['ui.router','uiRouterStyles','ngSanitize','oc.lazyLoad','ui.bootstrap','ui.sortable','chart.js']);            
+    var RBIS = angular.module('RBIS', ['ui.router','uiRouterStyles','ngSanitize','oc.lazyLoad','ui.bootstrap','ui.sortable','chart.js','moment-picker','ngMaterial']);            
     RBIS.config(['$stateProvider','$urlRouterProvider', '$httpProvider', '$ocLazyLoadProvider',function($stateProvider, $urlRouterProvider, $httpProvider,$ocLazyLoadProvider) {
                 $ocLazyLoadProvider.config({
                     // Set to true if you want to see what and when is dynamically loaded
@@ -118,5 +118,22 @@
                 $rootScope.$on("$stateChangeStart", function(evt, to, toP, from, fromP) { console.log("Start:   " + message(to, toP, from, fromP)); });
                 $rootScope.$on("$stateChangeSuccess", function(evt, to, toP, from, fromP) { console.log("Success: " + message(to, toP, from, fromP)); });
                 $rootScope.$on("$stateChangeError", function(evt, to, toP, from, fromP, err) { console.log("Error:   " + message(to, toP, from, fromP), err); });
-            });
+            })
+            .directive('ngIncludeTemplate', function() {  
+                return {  
+                    templateUrl: function(elem, attrs) { return attrs.ngIncludeTemplate; },  
+                    restrict: 'A',  
+                    scope: {  
+                    'ngIncludeVariables': '&'  
+                    },  
+                    link: function(scope, elem, attrs) {  
+                    var vars = scope.ngIncludeVariables();  
+                    if(typeof vars!="undefined"){
+                        Object.keys(vars).forEach(function(key) {  
+                            scope[key] = vars[key];  
+                        });  
+                    }                    
+                    }  
+                }  
+        });
 })();

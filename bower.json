@@ -36,8 +36,10 @@
     "openlayers": "^3.20.1",
     "oclazyload": "^1.1.0",
     "leaflet-draw": "leaflet.draw#0.2.4",
-    "angular-sanitize": "^1.6.3",
-    "angular-datepicker": "^2.0.3"
+    "angular-sanitize": "^1.5.8",
+    "angular-datepicker": "^2.0.3",
+    "angular-material": "^1.1.3",
+    "angular-moment-picker": "moment-picker#^0.9.10"
   },
   "resolutions": {
     "angular-ticker": "1.0.0",

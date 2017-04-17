@@ -1,7 +1,35 @@
-<script type="text/ng-template" id="roadsattribute">
-<ul class="roads-tree-attr-child">
-    <li ng-repeat="attrdata in road[key]">
-        <font class="tree-branch">|-- {{ $index + 1}}. &nbsp;</font><a ng-click="loadattrdata(attrdata)" ></a>
-    </li>   
-</ul>
+ 
+<!-- Road Main-->
+<script type="text/ng-template" id="roadmain">
+    <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="Details">
+                <table>
+                                    <tr ng-if="currentloadata[field].visible" ng-repeat = "field in currentloadatafields">
+                                        <td >{{ currentloadata[field].label }} : </td>
+                                        <td>
+                                            <label ng-if="currentloadata[field].ctrl=='label'">{{ road[field] }}</label>
+                                            <input type="text" ng-if="currentloadata[field].ctrl=='text'"  ng-model="road[field]" class="{{currentloadata[field].class}}"></input>
+                                            <select ng-if="currentloadata[field].ctrl=='select'" ng-model="road[field]" class="{{currentloadata[field].class}}">
+                                                <option value="{{opt.key}}"  ng-selected="road[field]==opt.key" ng-repeat="opt in currentloadata[field].options">{{ opt.label }}</option>
+                                            </select>                                   
+                                            <div layout-gt-xs="row" ng-if="currentloadata[field].ctrl=='date'">
+                                                <div flex-gt-xs>                                    
+                                                <md-datepicker ng-model="road[field]" md-placeholder="Enter date"></md-datepicker>
+                                                </div>
+                                            </div>
+                                            
+                                        </td>    
+                                    </tr>
+                    </table>
+               </md-tab>
+          <md-tab label="Remarks/Status">          
+        <textarea  ng-if="currentloadata[field].ctrl=='textarea'" 
+                                            ng-model="road[field]" 
+                                            class="{{currentloadata[field].class}}" 
+                                            style="currentloadata[field].style"></textarea>
+        </md-tab>
+        <md-tab label="Attachment"> 
+        <md-tab>
+     </md-tabs>   
+    
 </script>

@@ -1,3 +1,4 @@
+<div ng-include-template="/common/views/roads-templates.html"></div>
 <div class="row" ng-init="init()">        
 <div class="page-bar page-bar-color2">
     <ul class="page-breadcrumb">
@@ -62,9 +63,10 @@
     </div>
     <div>
         <div class="col-md-3" style="margin:0px;padding:0px">
-        <tabset>
-            <tab heading="Road Main Info">
-                <ul class="roads-tree-attr-main">
+         <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="Main Info">
+                <md-content class="md-padding">
+                <ul class="roads-tree-attr-main roads-tree-attr-wrapper">
                     <li><a ng-click="loaddatabyfield('road')"><i aria-hidden="true" class="fa fa-road road-information-list"></i>&nbsp;Road({{ road.R_NAME }})</a></li>
                     <ul class="roads-tree-attr-child">
                         <li><i class="fa fa-sitemap" aria-hidden="true"></i>
@@ -79,9 +81,11 @@
                             <ul ng-repeat = "key in ['RoadLocRefPoints']" class="roads-tree-attr-child" ng-include="'roadsattribute'"></ul>
                     </ul>                       
                 </ul>
-            </tab>
-            <tab heading="Features">
-                <ul class="roads-tree-attr-main">                     
+                </md-content>
+            </md-tab>
+            <md-tab label="Features">
+                <md-content class="md-padding">
+                <ul class="roads-tree-attr-main roads-tree-attr-wrapper">                     
                      <!-- Drainage -->
                      <li><a>{{ roadattrgroup.D.label}}</a>
                             <ul class="roads-tree-attr-child">
@@ -129,9 +133,10 @@
                          </ul>
                      </li>
                      -->
-                </ul>    
-            </tab>    
-         </tabset>    
+                </ul>
+                </md-content>    
+            </md-tab>    
+         </md-tabs>    
 
            <script type="text/ng-template" id="roadsattribute">
                 <li ng-repeat="attrdata in road[key]">
@@ -150,36 +155,11 @@
             </ul>
         </div>
         <div><!--- Content fields -->
-            <div class="col-md-9 no-padding">        
-                <table>
-                        <tr ng-if="currentloadata[field].visible" ng-repeat = "field in currentloadatafields">
-                            <td >{{ currentloadata[field].label }} : </td>
-                            <td>
-                                <label ng-if="currentloadata[field].ctrl=='label'">{{ road[field] }}</label>
-                                <input type="text" ng-if="currentloadata[field].ctrl=='text'"  ng-model="road[field]" class="{{currentloadata[field].class}}"></input>
-                                <select ng-if="currentloadata[field].ctrl=='select'" ng-model="road[field]" class="{{currentloadata[field].class}}">
-                                    <option value="{{opt.key}}"  ng-selected="road[field]==opt.key" ng-repeat="opt in currentloadata[field].options">{{ opt.label }}</option>
-                                </select>    
-
-                                 
-                                <textarea  ng-if="currentloadata[field].ctrl=='textarea'" 
-                                         ng-model="road[field]" 
-                                        class="{{currentloadata[field].class}}" 
-                                        style="currentloadata[field].style"></textarea>
-                            </td>    
-                        </tr>
-                </table> 
+            <div class="col-md-7 no-padding content-data-attr">        
+                    <div ng-if="currentfields=='road'" ng-include="'roadmain'"></div>
            </div>
-           <div class="col-md-3 no-padding">
-               <div class="col-md-12">
-                    <p class="input-group">
-                    <input type="text" class="form-control" datepicker-popup ng-model="dt" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
-                    </p>
-             </div>
-
+           <div class="col-md-5 no-padding">
+                <div id="roadmap"> </div>
            </div>        
          </div>   
 

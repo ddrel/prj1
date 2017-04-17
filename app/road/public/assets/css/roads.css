@@ -1,3 +1,4 @@
+#roadmap{width:100%;height:420px;}
 .table-roadmain{ background-color: White;
     border-collapse: collapse;
     border-color: #cccccc;
@@ -32,7 +33,9 @@
 .segment-id {color: #4d9ac5;}
 .note-font{font-size: 11px;}
 
-.roads-tree-attr-main{list-style:none;padding-left:2px;padding-top}
-.roads-tree-attr-child{list-style:none;padding-left:24px}
+.roads-tree-attr-wrapper{height:400px;overflow-y: auto;}
+.roads-tree-attr-main{list-style:none;padding-left:2px;padding-top;}
+.roads-tree-attr-child{list-style:none;padding-left:24px;}
+.content-data-attr{height:420px;;overflow-y: auto;}
 
 
