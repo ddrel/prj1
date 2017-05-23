@@ -80,9 +80,8 @@ angular.module('RBIS').controller("roadmapsCtrl", function( $scope, $http,$rootS
    
    $scope.getattribdisplay =  function(a,b){
        return utilities.roads.getattribdisplay(a,b);
-   }
+   };
    
-
    var _getshapestyle = function(o,name){
         //utilities.roads.STStyle
         if(name=="Carriageway"){

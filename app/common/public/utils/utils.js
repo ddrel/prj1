@@ -331,6 +331,7 @@ PlaceNames
                         "M": {text:"MIXED",color:"#357c31"}
                     };
 
+                  
     
     utilities.roads.STStyle = function(k){
         return {style: function(f){
@@ -349,8 +350,7 @@ PlaceNames
        var _value = "";
        if(name=="Bridges" || name=="PlaceNames"){
             _value = attr.Name;
-       }else if(name=="Carriageway"){
-           console.log(attr.SegmentID + "aaaaa")
+       }else if(name=="Carriageway"){           
            _value =  attr.SegmentID; // attr.NumLanes +"/" + attr.SurfaceTyp +"/" + attr.PavementTy + "/" +
        }else if(name=="Shoulders" || name=="Ditches" ||  name=="Guardrails" ||  name=="Structures" || name=="SideWalks"){
                 _value = attr.Position + "/" + attr.TypeID + " (" +  attr.LRPStartDi + " - " + attr.LRPEndDisp  +")";

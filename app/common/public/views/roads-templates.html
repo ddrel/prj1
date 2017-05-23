@@ -1,8 +1,67 @@
- 
-<!-- Road Main-->
+ <!-- Road Main-->
+<script type="text/ng-template" id="roadtypecontrol">
+    <label ng-if="currentloadata[field].ctrl=='label'">{{ road[field] }}</label>
+    <input type="text" ng-if="currentloadata[field].ctrl=='text'"  ng-model="road[field]" class="{{currentloadata[field].class}}"></input>
+    <select ng-if="currentloadata[field].ctrl=='select'" ng-model="road[field]" class="{{currentloadata[field].class}}">
+        <option value="{{opt.key}}"  ng-selected="road[field]==opt.key" ng-repeat="opt in currentloadata[field].options">{{ opt.label }}</option>
+    </select>                                   
+    <div layout-gt-xs="row" ng-if="currentloadata[field].ctrl=='date'">
+        <div flex-gt-xs>                                    
+        <md-datepicker ng-model="road[field]" md-placeholder="Enter date"></md-datepicker>
+        </div>
+    </div>
+</script>
 <script type="text/ng-template" id="roadmain">
     <md-tabs md-dynamic-height md-border-bottom>
             <md-tab label="Details">
+                <table>
+                    <tr>
+                        <td>{{ currentloadata['R_ID'].label }}</td>
+                        <td><div ng-repeat = "field in ['R_ID']" ng-include="'roadtypecontrol'"></div></td>
+                    </tr>
+                    <tr>
+                        <td>{{ currentloadata['R_NAME'].label }}</td>
+                        <td ng-repeat = "field in ['R_NAME']" ng-include="'roadtypecontrol'"></td>
+                    </tr>
+                    <tr>
+                        <td>{{ currentloadata['R_CLASS'].label }}</td>
+                        <td ng-repeat = "field in ['R_CLASS']" ng-include="'roadtypecontrol'"></td>
+                    </tr>
+                    <tr>
+                        <td>{{ currentloadata['R_Importan'].label }}</td>
+                        <td ng-repeat = "field in ['R_Importan']" ng-include="'roadtypecontrol'"></td>
+                    </tr>
+                    <tr>
+                        <td>{{ currentloadata['Environmen'].label }}</td>
+                        <td ng-repeat = "field in ['Environmen']" ng-include="'roadtypecontrol'"></td>
+                    </tr>
+                    <tr>
+                        <td>{{ currentloadata['DirFlow'].label }}</td>
+                        <td ng-repeat = "field in ['DirFlow']" ng-include="'roadtypecontrol'"></td>
+                    </tr>
+                    <tr>
+                        <td>{{ currentloadata['Terrain'].label }}</td>
+                        <td ng-repeat = "field in ['Terrain']" ng-include="'roadtypecontrol'"></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>{{ currentloadata['Length'].label }}</td>
+                        <td ng-repeat = "field in ['Length']" ng-include="'roadtypecontrol'"></td>
+                    </tr>
+                    <tr>
+                        <td>{{ currentloadata['RROW_acq_date'].label }}</td>
+                        <td ng-repeat = "field in ['RROW_acq_date']" ng-include="'roadtypecontrol'"></td>
+                    </tr>
+                    <tr>
+                        <td>{{ currentloadata['RROW_acq_cost'].label }}</td>
+                        <td ng-repeat = "field in ['RROW_acq_cost']" ng-include="'roadtypecontrol'"></td>
+                    </tr>
+                    <tr>
+                         <td>{{ currentloadata['RROW_usefullife'].label }}</td>
+                         <td ng-repeat = "field in ['RROW_usefullife']" ng-include="'roadtypecontrol'"></td>
+                    </tr>    
+                </table>    
+                <!--
                 <table>
                                     <tr ng-if="currentloadata[field].visible" ng-repeat = "field in currentloadatafields">
                                         <td >{{ currentloadata[field].label }} : </td>
@@ -21,12 +80,14 @@
                                         </td>    
                                     </tr>
                     </table>
+                    -->
                </md-tab>
-          <md-tab label="Remarks/Status">          
-        <textarea  ng-if="currentloadata[field].ctrl=='textarea'" 
-                                            ng-model="road[field]" 
-                                            class="{{currentloadata[field].class}}" 
-                                            style="currentloadata[field].style"></textarea>
+          <md-tab label="Remarks/Status"> 
+                {{ currentloadata['remarks'].label }}         
+                    <textarea ng-model="road['remarks']" 
+                              class="{{currentloadata['remarks'].class}}" 
+                              style="currentloadata['remarks'].style">
+                    </textarea>
         </md-tab>
         <md-tab label="Attachment"> 
         <md-tab>

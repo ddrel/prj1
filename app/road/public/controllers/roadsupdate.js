@@ -10,6 +10,22 @@ angular.module('RBIS').controller("roadsupdateCtrl", function( $scope, $http,$ro
     $scope.roadattrgroup = utilities.roads.groups;
 
 
+var _getshapestyle = function(o,name){    
+    if(name=="Carriageway"){
+        return utilities.roads.STStyle(o.SurfaceTyp); 
+    }else{
+                return {
+                                        style: function(f){
+                                        return {weight: 4,
+                                                opacity: 1,
+                                                color: '#ff6666',
+                                                dashArray: '4',
+                                                fillOpacity: 0.7
+                                            }											
+                                        }
+                        }
+            };
+    };
 
 
 $scope.getattribdisplay =  function(attr,key){
@@ -45,9 +61,34 @@ $scope.loaddatabyfield = function(a){
 
 
 
-$scope.loadatttrdata =  function(data){
-
+$scope.loadatttrsdata =  function(data){
+    console.log(data);
 }
+
+
+$scope.loadattrdata =  function(data,name){
+    $("#roadmap").leafletMaps("clear");
+    var geojson =  data.geometry;
+    name =  name.replace("Road","");
+    var _style = _getshapestyle(data,name);
+    var _geo = $("#roadmap").leafletMaps("setGeoJSON", geojson,null,_style);
+    _geo.on({
+        mouseover: function (e) {_geo.openPopup(); },
+        click: function (e) {
+            $("#roadmap").leafletMaps("zoomToFeature", e.target);
+        }
+    });
+    
+    var tooltiptext = utilities.roads.getattribdisplay(data,name);
+    _geo.eachLayer(function (layer) {                        
+            layer.bindPopup(name + ": "  + tooltiptext);
+        });
+    $("#roadmap").leafletMaps("zoomToFeature", _geo);
+    
+    
+    //console.log(data);
+}
+
 
 
 

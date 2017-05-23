@@ -161,15 +161,15 @@ var sevdetails = {"sev1":{"text":"Severity level 1","from":0,"to":0},
 				},
 				clear:function(){
 					var map = jQuery(this).data("map");
-					for(i in map._layers) {
-					        if(map._layers[i]._path != undefined || map._layers[i]._crs != undefined) {
-					            try {
+					for(i in map._layers) {							
+					        if(map._layers[i]._path != undefined || map._layers[i]._crs != undefined  || map._layers[i]._url==undefined) {
+					            try {									
 					                map.removeLayer(map._layers[i]);
 					            }
 					            catch(e) {
 					            }
-					        }
-					    }
+					        };
+					    };
 				},
 				initialized:function(){
 					return  jQuery(this).data("initialized");

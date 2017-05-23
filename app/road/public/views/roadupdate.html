@@ -137,12 +137,12 @@
                 </md-content>    
             </md-tab>    
          </md-tabs>    
-
-           <script type="text/ng-template" id="roadsattribute">
-                <li ng-repeat="attrdata in road[key]">
-                    <font class="tree-branch">{{ getattribdisplay(attrdata,key) }}</font><a ng-click="loadattrdata(attrdata)" ></a>
-                </li>
-           </script>                   
+        <script type="text/ng-template" id="roadsattribute">
+            <li ng-repeat="attrdata in road[key]" ng-click="loadattrdata(attrdata,key)">
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                <font class="tree-branch">{{ getattribdisplay(attrdata,key) }}</font><a ng-click="loadattrsdata(attrdata)" ></a>
+            </li>
+        </script>                   
         </div>
         <div class="col-md-9 no-padding">
             <div class="page-bar page-bar-color2">
