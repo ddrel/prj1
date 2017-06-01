@@ -56,8 +56,9 @@ exports.getroadaggmain = (req,res)=>{
     var roads = mongoose.model("Roads");
     var qry = req.query.qry;
     var page= req.query.page || 1;
+    var limit= req.query.limit || 10;
 
-    roads.getroadaggmain(qry,page,10,function(err,data){
+    roads.getroadaggmain(qry,page,limit,function(err,data){
         if(err){res.status(500).json(err);return;};
         res.status(200).json(data);
     })

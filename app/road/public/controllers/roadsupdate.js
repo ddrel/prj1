@@ -10,6 +10,12 @@ angular.module('RBIS').controller("roadsupdateCtrl", function( $scope, $http,$ro
     $scope.roadattrgroup = utilities.roads.groups;
 
 
+    $scope.currentModel= {};
+    $scope.currentModel.name = "";
+    $scope.currentModel.list = [];
+    $scope.currentModel.currentItem = null;
+    $scope.currentModel.page_attr_select = [];
+
 var _getshapestyle = function(o,name){    
     if(name=="Carriageway"){
         return utilities.roads.STStyle(o.SurfaceTyp); 
@@ -33,37 +39,82 @@ $scope.getattribdisplay =  function(attr,key){
     return utilities.roads.getattribdisplay(attr,key);
 }
 
+$scope.loadattrsFeaturesdata =  function(key,data){
+    $scope.initModelData(key,data,[]);
+    //console.log($scope.currentModel.currentItem);               
+    
+}
+
 
 $scope.init =  function(){
     $timeout(function(){
             $http.get("/api/roads/getroadshortattrinfo?rid=" + $stateParams.id).success(function(road){
-                    $scope.road = road;
+                    $scope.road = road;       
+                    $scope.loadAttrAsOptions("RoadLocRefPoints","RoadCarriageway");              
+                    $scope.loadRoadMainData();
             });
-            
             $("#roadmap").leafletMaps();
     });
 };
+$scope.loadRoadMainData =  function(){
+    $scope.initModelData("road",$scope.road,[]);
+};
 
-$scope.getattrdata = function(key){        
+$scope.loadAttrAsOptions =  function(attr,toattr,cb){
+        $http.get("/api/roads/getroadattr?rid=" + $scope.road.R_ID + "&attr=" + attr).success(function(data){
+            if(toattr=="RoadCarriageway"){
+                    datamodel.structure[toattr]["LRPStartKm"].options = [];                                            
+                    datamodel.structure[toattr]["LRPEndKmPo"].options = [];
+                    data.forEach(function(d){                            
+                            datamodel.structure[toattr]["LRPStartKm"].options.push({key:d.KMPostNo,label:d.KMPostNo});
+                            datamodel.structure[toattr]["LRPEndKmPo"].options.push({key:d.KMPostNo,label:d.KMPostNo});                            
+                    });                                                                                     
+            }
+            
+            if(cb) cb(data);                                                 
+        }); 
+
+
+}
+
+
+
+$scope.getattrdata = function(key,cb){        
+    $scope.currentModel.currentItem = null;
     if(!$scope.road.hasOwnProperty(key)){
         $http.get("/api/roads/getroadattr?rid=" + $scope.road.R_ID + "&attr=" + key).success(function(data){
-                    $scope.road[key] = data;
-        });
-    };         
+                    $scope.road[key] = data;                                        
+                    $scope.initModelData(key,null,$scope.road[key]);
+                    if(cb) cb(data);                             
+        });                        
+    }else{        
+        $scope.initModelData(key,null,$scope.road[key]); 
+
+    }     
+    
 };
 
 
-$scope.loaddatabyfield = function(a){
-    $scope.currentloadatafields = Object.keys(datamodel.structure[a])
-    $scope.currentloadata =  datamodel.structure[a];
-    $scope.currentfields = a;; 
-}
+$scope.initModelData =  function(key,currentItem,list){
+    $scope.currentloadatafields = Object.keys(datamodel.structure[key])
+    $scope.currentModel.name = key;
+    $scope.currentModel.struct =  datamodel.structure[key];
+    $scope.currentModel.list = list;
+    $scope.currentModel.currentItem = currentItem;
+
+    // breadcrums for the road/attr/features
+    $scope.currentModel.page_attr_select = [];
+    if(key!="road"){
+        $scope.currentModel.page_attr_select = [];
+        $scope.currentModel.page_attr_select.push(utilities.roads.attrlabel[key].label);
+        if(currentItem){
+            $scope.currentModel.page_attr_select.push($scope.getattribdisplay(currentItem,key));
+        }
+    }
+    
 
 
-
-$scope.loadatttrsdata =  function(data){
-    console.log(data);
-}
+};
 
 
 $scope.loadattrdata =  function(data,name){
@@ -88,8 +139,6 @@ $scope.loadattrdata =  function(data,name){
     
     //console.log(data);
 }
-
-
 
 
   this.myDate = new Date();

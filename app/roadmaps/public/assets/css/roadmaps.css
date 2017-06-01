@@ -16,3 +16,5 @@
 .location-list .road-location-list{}
 .location-list .road-information-list{}
 .regionprovince-list{font-size:12px;padding-left: 8px;}
+
+.clear-search{ cursor: pointer;font-size: 20px;position: absolute;right: 12px;top: 17px;}

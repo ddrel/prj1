@@ -12,8 +12,8 @@
     </ul>
 </div>   
     <div class="col-lg-3 road-map-left">
-        <tabset>
-            <tab heading="Location">
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="Location">
                 <ul class="regionprovince-list location-list">
                     <li ng-repeat="region in regionprovince">
                         <a class="toggle-list">
@@ -99,16 +99,76 @@
                             </li>
                         </ul>
                 </script>
-            </tab>
-            <tab heading="Advance Search">
-            </tab>
-        </tabset>                    
+            </md-tab>
+            <md-tab label="Search">
+                <table class="table">
+                        <tr>
+                            <td>
+                                <input ng-change="onSearch(searchText)" ng-model="searchText" type="text" class="form-control txt-white" placeholder="Search for road name or road id" />                                                                                                          
+                                <i class="fa fa-times clear-search" aria-hidden="true" title="Clear Search" ng-click="clearsearchitem()" style="float:right"></i>
+                            </td>        
+                         </tr>                               
+                        <tr>                            
+                            <td>                                
+                                    <table class="table table-bordered-2 table-roadmain" ng-show="roadsCollection.length>0">            
+                                            <thead>
+                                                <tr class="table-head">
+                                                    <td width="25px">
+                                                       <!-- <input type="checkbox" ng-model="searchAllSelected" ng-change="toggleAll(searchAllSelected)"></input> -->
+                                                    </td>
+                                                    <td  width="110px">Road ID</td>
+                                                    <td>Road Name</td>                                                    
+                                                </tr>                                                                     
+                                            </thead>
+                                            <tbody>           
+                                                <tr ng-repeat="road in roadsCollection">
+                                                    <td>
+                                                        <i class="fa" ng-class="{'fa-check':isroadsearchlist(road),'fa-share':!isroadsearchlist(road)}" aria-hidden="true" ng-click="addsearchitem(road)"></i>
+                                                        <!--<input type="checkbox" ng-model="road.checked"></input>-->
+                                                    </td>
+                                                    <td>{{ road._id.R_ID}}</td>
+                                                    <td title="{{ road._id.R_NAME }}">{{road._id.R_NAME }}</td>                                                            
+                                                </tr>    
+                                            </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td align="left" colspan="3">                                                   
+                                                    <pagination previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"  ng-show="roadsCollection.length>0" ng-change="pageChanged(pagination.CurrentPage)" rotate="false" boundary-link-numbers="false" total-items="(pagination.max * 10)" ng-model="pagination.CurrentPage" max-size="3" class="pagination-sm" boundary-links="true">
+                                                        </pagination>
+                                                </td>    
+                                            </tr>    
+                                        </tfoot>             
+                                        </table>
+                                     <!-- Selected road Search item -->
+                                     <ul class="location-list">
+                                        <li ng-repeat="road in searchItems">    
+                                            <i class="fa fa-times" aria-hidden="true" title="Remove {{road._id.R_NAME}} from searched item" ng-click="closesearchitem($index)"></i>                    
+                                            <font class="tree-branch">|--</font>                        
+                                            <a class="toggle-list">
+                                                <i  ng-click="ontoggle_loc('road_attr',road._id,$event)" class="fa fa-plus-square toggle-ctrl" aria-hidden="true"></i>
+                                                <font ng-click="onclickattr(road,road._id.R_NAME)">{{ road._id.R_NAME }}</font> 
+                                            </a>
+                                            <ul class="location-list"id="road_attr{{road._id.R_ID}}" style="display:none;margin-left:21px;">                                            
+                                                <li ng-repeat="attr in road.attr.attrs" ng-include="'roadsattribute'"></li>
+                                            </ul>            
+                                        </li>
+                                    </ul>           
+                            </td>    
+                        </tr>                                                    
+                </table>                  
+            </md-tab>
+        </md-tabs>                    
     </div>    
     <!-- Division-->
     <div class="col-lg-9 road-map-right">
         <div class="roadmap-details">        
         </div> 
         <div class="roadmap-map">
+            <select  style="position:absolute;z-index:9999;" ng-change="onmapselect(selectedmap)" ng-model="selectedmap">
+                <option value="0">OSM Bright</option>
+                <option value="1">Google Street Map</option>
+                <option value="2">Google Sattelite</option>
+             <select>   
             <div id="roadmap"> </div>                
         </div>    
     </div>

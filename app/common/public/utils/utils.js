@@ -346,12 +346,24 @@ PlaceNames
     }
 
 
+   utilities.roads.displayattr =  function(attr){
+       var table = "<div style='max-height:200px;overflow-y:auto;'><table class='table'>";
+       for(var k in attr){
+           console.log(k + ": " + attr[k]);
+       if(k!="_id" && k!="geometry" && "$$hashKey"){
+               table+="<tr><td>" + k + "</td>" + "<td>" + attr[k] + "</td></tr>"; 
+           }
+       }
+       table+="</table></div>"
+       return table;
+   } 
+
     utilities.roads.getattribdisplay = function(attr,name){
        var _value = "";
        if(name=="Bridges" || name=="PlaceNames"){
             _value = attr.Name;
        }else if(name=="Carriageway"){           
-           _value =  attr.SegmentID; // attr.NumLanes +"/" + attr.SurfaceTyp +"/" + attr.PavementTy + "/" +
+           _value =  attr.SurfaceTyp + "-" + attr.SegmentID; // attr.NumLanes +"/" + attr.SurfaceTyp +"/" + attr.PavementTy + "/" +
        }else if(name=="Shoulders" || name=="Ditches" ||  name=="Guardrails" ||  name=="Structures" || name=="SideWalks"){
                 _value = attr.Position + "/" + attr.TypeID + " (" +  attr.LRPStartDi + " - " + attr.LRPEndDisp  +")";
        }else if(name=="LocRefPoints"){

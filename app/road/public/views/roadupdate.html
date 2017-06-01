@@ -67,7 +67,7 @@
             <md-tab label="Main Info">
                 <md-content class="md-padding">
                 <ul class="roads-tree-attr-main roads-tree-attr-wrapper">
-                    <li><a ng-click="loaddatabyfield('road')"><i aria-hidden="true" class="fa fa-road road-information-list"></i>&nbsp;Road({{ road.R_NAME }})</a></li>
+                    <li><a ng-click="loadRoadMainData()"><i aria-hidden="true" class="fa fa-road road-information-list"></i>&nbsp;Road({{ road.R_NAME }})</a></li>
                     <ul class="roads-tree-attr-child">
                         <li><i class="fa fa-sitemap" aria-hidden="true"></i>
                             <a ng-click="getattrdata('RoadBridges')" ><font class="tree-branch">|--</font>{{ roadsAttr.RoadBridges.label }} ({{ road["RoadBridges_length"] }})</a>
@@ -140,7 +140,7 @@
         <script type="text/ng-template" id="roadsattribute">
             <li ng-repeat="attrdata in road[key]" ng-click="loadattrdata(attrdata,key)">
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                <font class="tree-branch">{{ getattribdisplay(attrdata,key) }}</font><a ng-click="loadattrsdata(attrdata)" ></a>
+                <font class="tree-branch" ng-click="loadattrsFeaturesdata(key,attrdata)">{{ getattribdisplay(attrdata,key) }}</font>
             </li>
         </script>                   
         </div>
@@ -151,18 +151,24 @@
                     <i aria-hidden="true" class="fa fa-road road-information-list"></i>
                     <a>{{road.R_NAME}}</a>
                     <i class="fa fa-angle-right"></i>
-                </li>                
+                </li>
+                
+                <li ng-repeat="pageattr in currentModel.page_attr_select">
+                    <a>{{pageattr}}</a>
+                    <i class="fa fa-angle-right"></i>
+                </li>                                    
             </ul>
         </div>
         <div><!--- Content fields -->
             <div class="col-md-7 no-padding content-data-attr">        
-                    <div ng-if="currentfields=='road'" ng-include="'roadmain'"></div>
+                    <div ng-if="currentModel.name =='road'" ng-include="'roadmain'"></div>                    
+                    <div  ng-if="currentModel.name!='road' && currentModel.list.length>0" ng-include="'roadattributesList'"></div>
+                    <div  ng-if="currentModel.name!='road' && currentModel.currentItem!=null" ng-include="'roadattributesItem'"></div>                    
            </div>
            <div class="col-md-5 no-padding">
                 <div id="roadmap"> </div>
            </div>        
          </div>   
-
         </div>      
     </div>                    
 </div>
