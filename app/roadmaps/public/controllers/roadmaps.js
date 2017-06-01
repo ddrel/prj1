@@ -132,7 +132,15 @@ angular.module('RBIS').controller("roadmapsCtrl", function( $scope, $http,$rootS
                 maxZoom: 24,
                 type:'satellite'
             }),
-            mapbox:L.tileLayer("https://{s}.tiles.mapbox.com/v4/feelcreative.llm8dpdk/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZmVlbGNyZWF0aXZlIiwiYSI6Ik1Gak9FXzAifQ.9eB142zVCM4JMg7btDDaZQ")
+            mapbox:L.tileLayer("https://{s}.tiles.mapbox.com/v4/feelcreative.llm8dpdk/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZmVlbGNyZWF0aXZlIiwiYSI6Ik1Gak9FXzAifQ.9eB142zVCM4JMg7btDDaZQ"),
+            terrainMutant: L.gridLayer.googleMutant({
+                maxZoom: 24,
+                type:'terrain'
+                })
+        ,hybridMutant:L.gridLayer.googleMutant({
+			maxZoom: 24,
+			type:'hybrid'
+		})
     };
 
 
@@ -147,6 +155,10 @@ angular.module('RBIS').controller("roadmapsCtrl", function( $scope, $http,$rootS
                     layer = $scope.maplayers.roadMutant;
                 }else if(o==2){
                     layer = $scope.maplayers.satMutant;
+                }else if(o=3){
+                    layer = $scope.maplayers.terrainMutant
+                }else if(o=4){
+                    layer = $scope.maplayers.hybridMutant
                 }
 
                 $scope._currentlayer.index = o;                
