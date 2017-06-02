@@ -65,23 +65,13 @@ var sevdetails = {"sev1":{"text":"Severity level 1","from":0,"to":0},
 						
 					
 
-					if(options.mutilplebasemap){
+					if(_default.mutilplebasemap){
 						//Mapsmain.attr("id")
 						//mapbox.satellite
 						var map = L.map(this,{ zoomControl: false }).setView([12.80, 122.27], 5) 
 						var mapbox = L.tileLayer("https://{s}.tiles.mapbox.com/v4/feelcreative.llm8dpdk/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZmVlbGNyZWF0aXZlIiwiYSI6Ik1Gak9FXzAifQ.9eB142zVCM4JMg7btDDaZQ");
-						/**/
-						var roadMutant = L.gridLayer.googleMutant({
-							maxZoom: 24,
-							type:'roadmap'
-							}) //.addTo(map);
-							
-						var satMutant = L.gridLayer.googleMutant({
-								maxZoom: 24,
-								type:'satellite'
-							});
-							
-
+							/**/
+						
 							/*
 							L.control.layers({
 								"Mapbox": mapbox,

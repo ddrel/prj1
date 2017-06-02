@@ -347,12 +347,11 @@ PlaceNames
 
 
    utilities.roads.displayattr =  function(attr){
-       var table = "<div style='max-height:200px;overflow-y:auto;'><table class='table'>";
-       for(var k in attr){
-           console.log(k + ": " + attr[k]);
-       if(k!="_id" && k!="geometry" && "$$hashKey"){
-               table+="<tr><td>" + k + "</td>" + "<td>" + attr[k] + "</td></tr>"; 
-           }
+       var table = "<div style='max-height:200px;overflow-y:auto;overflow-x:hidden;'><table class='table'>";
+       for(var k in attr){             
+        if(k=="_id" || k=="geometry" || k=="$$hashKey"){}else{
+                table+="<tr><td>" + k + "</td>" + "<td>" + attr[k] + "</td></tr>";
+            }        
        }
        table+="</table></div>"
        return table;

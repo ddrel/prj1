@@ -53,11 +53,10 @@
                                                     {
                                                         serie: true,
                                                         cache:true,
-                                                        files: ['/bower_components/leaflet/dist/leaflet.js',
-                                                                '/bower_components/leaflet/dist/leaflet.css',
+                                                        files: ['/common/plugins/leaflet/leaflet.js',
+                                                                '/common/plugins/leaflet/leaflet.css',
                                                                 '/bower_components/leaflet-draw/dist/leaflet.draw.js',
-                                                                '/bower_components/leaflet-draw/dist/leaflet.draw.css',
-                                                                '/bower_components/Leaflet.GridLayer.GoogleMutant/Leaflet.GoogleMutant.js',
+                                                                '/bower_components/leaflet-draw/dist/leaflet.draw.css',                                                                
                                                                 '/common/js/leaflet.maps.jquery.js',
                                                                 '/road/assets/css/roads.css',
                                                                 '/road/controllers/roadsupdate.js'                                                                
